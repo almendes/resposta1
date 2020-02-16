@@ -48,24 +48,26 @@ function contem()
 
 # Variavel de controle dos ips
 ips=()
+# Limpa arquivo de saida
+echo "" > /tmp/output_1.txt
 
 while IFS= read -r linha
 do
   # Limpa caracteres estranhos
-  c0=${linha/	/ }A
+  c0=${linha/	/ }
   # Identifica primeira coluna
   c1=${c0%% *}
   # Tratamento linha a linha
   case $c1 in
-  '#'|'') echo $linha ;;
+  '#'|'') echo $linha >> /tmp/output_1.txt ;;
   *) if [ $(valida_ip "$c1") == "0" ];
      then
-        echo $linha
+        echo $linha >> /tmp/output_1.txt
      else
      if [ $(contem "${ips[@]}" "$c1") == "0" ]; 
      then
         ips+=($c1)
-        echo $linha
+        echo $linha >> /tmp/output_1.txt
      fi
      fi
      ;;
